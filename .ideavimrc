@@ -1,0 +1,61 @@
+"" Source your .vimrc
+"source ~/.vimrc
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" remap escape key
+inoremap jk <ESC>
+
+" leader key remap
+let mapleader=" "
+
+" enable copy and paste from system and IDE
+set clipboard+=unnamed
+set clipboard+=ideaput
+ 
+" Ignore case when searching
+set ignorecase
+ 
+" When searching try to be smart about cases
+set smartcase
+ 
+" Highlight search results
+set hlsearch
+
+set incsearch
+
+
+" Show matching brackets when text indicator is over them
+set showmatch
+ 
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+nnoremap gi :action GotoImplementation<CR>
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
