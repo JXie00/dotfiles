@@ -1,0 +1,84 @@
+{
+  "workbench.colorTheme": "Palenight Theme",
+  "workbench.editor.highlightModifiedTabs": true,
+  "editor.scrollBeyondLastLine": false,
+  "vim.useSystemClipboard": true,
+  "vim.leader": " ",
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "k"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["g", "i"],
+      "commands": ["editor.action.goToImplementation"]
+    },
+    {
+      "before": ["<leader>", "w"],
+      "commands": ["workbench.action.splitEditor"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["revealInExplorer"]
+    },
+    {
+      "before": ["g", "i"],
+      "commands": [
+        {
+          "command": "editor.action.goToImplementation"
+        }
+      ]
+    },
+    {
+      "before": ["leader", "c"],
+      "commands": ["workbench.action.showCommands"]
+    },
+    {
+      "before": ["leader", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["leader", "p"],
+      "commands": ["workbench.actions.view.problems"]
+    },
+    {
+      "before": ["g", "e"],
+      "commands": ["editor.action.marker.nextInFiles"]
+    },
+    {
+      "before": ["g", "E"],
+      "commands": ["editor.action.marker.prevInFiles"]
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    }
+  ],
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.exclude": {
+    ".idea": true,
+    ".vscode": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "node_modules/": true,
+    "templates_module/": true,
+    "**/.project": true,
+    ".mypy_cache/": true
+    //     "**/.classpath": true,
+    //     "**/.coverage": true,
+    //     "**/.factorypath": true,
+    //     "**/.settings": true,
+  }
+}
