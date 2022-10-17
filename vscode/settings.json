@@ -18,32 +18,8 @@
       "commands": ["editor.action.goToImplementation"]
     },
     {
-      "before": ["<leader>", "w"],
-      "commands": ["workbench.action.splitEditor"]
-    },
-    {
-      "before": ["<leader>", "f"],
-      "commands": ["revealInExplorer"]
-    },
-    {
-      "before": ["g", "i"],
-      "commands": [
-        {
-          "command": "editor.action.goToImplementation"
-        }
-      ]
-    },
-    {
-      "before": ["leader", "c"],
-      "commands": ["workbench.action.showCommands"]
-    },
-    {
-      "before": ["leader", "f"],
-      "commands": ["workbench.action.quickOpen"]
-    },
-    {
-      "before": ["leader", "p"],
-      "commands": ["workbench.actions.view.problems"]
+      "before": ["g", "s"],
+      "commands": ["workbench.action.gotoSymbol"]
     },
     {
       "before": ["g", "e"],
@@ -52,6 +28,445 @@
     {
       "before": ["g", "E"],
       "commands": ["editor.action.marker.prevInFiles"]
+    },
+    {
+      "before": ["<Leader>", "t", "n"],
+      "commands": ["workbench.action.nextEditor"]
+    },
+    {
+      "before": ["<Leader>", "t", "N"],
+      "commands": ["workbench.action.previousEditor"]
+    },
+    {
+      "before": ["<Leader>", "s", "h"],
+      "commands": ["workbench.action.splitEditorLeft"]
+    },
+    {
+      "before": ["<Leader>", "s", "j"],
+      "commands": ["workbench.action.splitEditorDown"]
+    },
+    {
+      "before": ["<Leader>", "s", "k"],
+      "commands": ["workbench.action.splitEditorUp"]
+    },
+    {
+      "before": ["<Leader>", "s", "l"],
+      "commands": ["workbench.action.splitEditorRight"]
+    },
+    {
+      "before": ["<Leader>", "c", "e", "g"],
+      "commands": ["workbench.action.closeEditorsAndGroup"]
+    },
+    {
+      "before": ["<Leader>", "c", "o", "e"],
+      "commands": ["workbench.action.closeOtherEditors"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["revealInExplorer"]
+    },
+    {
+      "before": ["<Leader>", "a"],
+      "commands": ["editor.action.quickFix"]
+    },
+    {
+      "before": ["<Leader>", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<leader>", "s"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["leader", "c"],
+      "commands": ["workbench.action.showCommands"]
+    },
+    {
+      "before": ["leader", "o"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["leader", "p"],
+      "commands": ["workbench.actions.view.problems"]
+    },
+    {
+      "before": ["<Leader>", "m", "n"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["<Leader>", "m", "N"],
+      "commands": ["editor.action.marker.prev"]
+    },
+
+    // git commands
+    {
+      "before": ["leader", "g", "g"],
+      "commands": ["workbench.scm.focus"]
+    },
+    {
+      "before": ["leader", "g", "t", "l"],
+      "commands": ["timeline.focus"]
+    },
+    {
+      "before": ["leader", "g", "i", "r"],
+      "commands": ["git.init"]
+    },
+    {
+      "before": ["leader", "g", "a", "i"],
+      "commands": ["git.ignore"]
+    },
+    {
+      "before": ["leader", "g", "p", "g"],
+      "commands": ["github.publish"]
+    },
+    {
+      "before": ["leader", "g", "a", "r"],
+      "commands": ["git.addRemote"]
+    },
+    {
+      "before": ["leader", "g", "r", "r"],
+      "commands": ["git.removeRemote"]
+    },
+    {
+      "before": ["leader", "g", "s", "c"],
+      "commands": ["git.stage"]
+    },
+    {
+      "before": ["leader", "g", "s", "a", "c"],
+      "commands": ["git.stageAll"]
+    },
+    {
+      "before": ["leader", "g", "s", "a", "m"],
+      "commands": ["git.stageAllMerge"]
+    },
+    {
+      "before": ["leader", "g", "s", "a", "t"],
+      "commands": ["git.stageAllTracked"]
+    },
+    {
+      "before": ["leader", "g", "s", "a", "t"],
+      "commands": ["git.stageAllUntracked"]
+    },
+    {
+      "before": ["leader", "g", "u", "c"],
+      "commands": ["git.unstage"]
+    },
+    {
+      "before": ["leader", "g", "u", "a", "c"],
+      "commands": ["git.unstageAll"]
+    },
+    {
+      "before": ["leader", "g", "c", "m"],
+      "commands": ["git.commit"]
+    },
+    {
+      "before": ["leader", "g", "c", "a"],
+      "commands": ["git.commitAll"]
+    },
+    {
+      "before": ["leader", "g", "c", "s"],
+      "commands": ["git.commitStaged"]
+    },
+    {
+      "before": ["leader", "g", "c", "e"],
+      "commands": ["git.commitEmpty"]
+    },
+    {
+      "before": ["leader", "g", "u", "l", "c"],
+      "commands": ["git.undoCommit"]
+    },
+    {
+      "before": ["leader", "g", "p", "h"],
+      "commands": ["git.push"]
+    },
+    {
+      "before": ["leader", "g", "p", "f"],
+      "commands": ["git.pushForce"]
+    },
+    {
+      "before": ["leader", "g", "p", "b", "t"],
+      "commands": ["git.pushTo"]
+    },
+    {
+      "before": ["leader", "g", "p", "b", "t", "f"],
+      "commands": ["git.pushToForce"]
+    },
+    {
+      "before": ["leader", "g", "p", "l"],
+      "commands": ["git.pull"]
+    },
+    {
+      "before": ["leader", "g", "P", "f"],
+      "commands": ["git.pullFrom"]
+    },
+    {
+      "before": ["leader", "g", "P", "r"],
+      "commands": ["git.pullRebase"]
+    },
+    {
+      "before": ["leader", "g", "A", "r"],
+      "commands": ["git.rebaseAbort"]
+    },
+    {
+      "before": ["leader", "g", "c", "b"],
+      "commands": ["git.branch"]
+    },
+    {
+      "before": ["leader", "g", "c", "b", "f"],
+      "commands": ["git.branchFrom"]
+    },
+    {
+      "before": ["leader", "g", "d", "b"],
+      "commands": ["git.deleteBranch"]
+    },
+    {
+      "before": ["leader", "g", "m", "b"],
+      "commands": ["git.merge"]
+    },
+    {
+      "before": ["leader", "g", "p", "b"],
+      "commands": ["git.publish"]
+    },
+    {
+      "before": ["leader", "g", "r", "b"],
+      "commands": ["git.renameBranch"]
+    },
+    {
+      "before": ["leader", "g", "R", "b"],
+      "commands": ["git.rebase"]
+    },
+    {
+      "before": ["leader", "g", "C"],
+      "commands": ["git.checkout"]
+    },
+    {
+      "before": ["leader", "g", "C", "d"],
+      "commands": ["git.checkoutDetached"]
+    },
+    {
+      "before": ["leader", "g", "c", "p"],
+      "commands": ["git.cherryPick"]
+    },
+    {
+      "before": ["leader", "g", "d", "c"],
+      "commands": ["git.clean"]
+    },
+    {
+      "before": ["leader", "g", "d", "a", "c"],
+      "commands": ["git.cleanAll"]
+    },
+    {
+      "before": ["leader", "g", "d", "a", "t"],
+      "commands": ["git.cleanAllTracked"]
+    },
+    {
+      "before": ["leader", "g", "d", "a", "u"],
+      "commands": ["git.cleanAllUntracked"]
+    },
+    {
+      "before": ["leader", "g", "s", "s"],
+      "commands": ["git.stash"]
+    },
+    {
+      "before": ["leader", "g", "s", "i", "u"],
+      "commands": ["git.stashIncludeUntracked"]
+    },
+    {
+      "before": ["leader", "g", "a", "s"],
+      "commands": ["git.stashApply"]
+    },
+    {
+      "before": ["leader", "g", "a", "l", "s"],
+      "commands": ["git.stashApplyLatest"]
+    },
+    {
+      "before": ["leader", "g", "d", "s"],
+      "commands": ["git.stashDrop"]
+    },
+    {
+      "before": ["leader", "g", "p", "s"],
+      "commands": ["git.stashPop"]
+    },
+    {
+      "before": ["leader", "g", "p", "l", "s"],
+      "commands": ["git.stashPopLatest"]
+    },
+    {
+      "before": ["leader", "g", "c", "t"],
+      "commands": ["git.createTag"]
+    },
+    {
+      "before": ["leader", "g", "d", "t"],
+      "commands": ["git.deleteTag"]
+    },
+    {
+      "before": ["leader", "g", "p", "t"],
+      "commands": ["git.pushTags"]
+    },
+    {
+      "before": ["leader", "g", "f", "f"],
+      "commands": ["git.fetch"]
+    },
+    {
+      "before": ["leader", "g", "f", "p"],
+      "commands": ["git.fetchPrune"]
+    },
+    {
+      "before": ["leader", "g", "f", "f", "a", "r"],
+      "commands": ["git.fetchAll"]
+    },
+    {
+      "before": ["leader", "g", "o", "c"],
+      "commands": ["git.openChange"]
+    },
+    {
+      "before": ["leader", "g", "o", "f"],
+      "commands": ["git.openFile"]
+    },
+    {
+      "before": ["leader", "g", "s", "n"],
+      "commands": ["editor.action.dirtydiff.next"]
+    },
+    {
+      "before": ["leader", "g", "s", "N"],
+      "commands": ["editor.action.dirtydiff.previous"]
+    },
+    {
+      "before": ["leader", "g", "m", "n"],
+      "commands": ["workbench.action.editor.nextChange"]
+    },
+    {
+      "before": ["leader", "g", "m", "N"],
+      "commands": ["workbench.action.editor.previousChange"]
+    },
+    {
+      "before": ["leader", "g", "c", "n"],
+      "commands": ["workbench.action.compareEditor.nextChange"]
+    },
+    {
+      "before": ["leader", "g", "c", "N"],
+      "commands": ["workbench.action.compareEditor.previousChange"]
+    },
+    {
+      "before": ["leader", "g", "i", "v"],
+      "commands": ["toggle.diff.renderSideBySide"]
+    },
+    {
+      "before": ["leader", "m", "c", "b"],
+      "commands": ["merge-conflict.accept.both"]
+    },
+    {
+      "before": ["leader", "m", "c", "c"],
+      "commands": ["merge-conflict.accept.current"]
+    },
+    {
+      "before": ["leader", "m", "c", "i"],
+      "commands": ["merge-conflict.accept.incoming"]
+    },
+    {
+      "before": ["leader", "m", "c", "a", "b"],
+      "commands": ["merge-conflict.accept.all-both"]
+    },
+    {
+      "before": ["leader", "m", "c", "a", "c"],
+      "commands": ["merge-conflict.accept.all-current"]
+    },
+    {
+      "before": ["leader", "m", "c", "a", "i"],
+      "commands": ["merge-conflict.accept.all-incoming"]
+    },
+    {
+      "before": ["leader", "m", "c", "o"],
+      "commands": ["merge-conflict.compare"]
+    },
+    {
+      "before": ["leader", "m", "c", "n"],
+      "commands": ["merge-conflict.next"]
+    },
+    {
+      "before": ["leader", "m", "c", "N"],
+      "commands": ["merge-conflict.previous"]
+    },
+    // debug commands
+    {
+      "before": ["<Leader>", "d", "f"],
+      "commands": ["workbench.view.debug"]
+    },
+    {
+      "before": ["<Leader>", "d", "c"],
+      "commands": ["workbench.action.debug.continue"]
+    },
+    {
+      "before": ["<Leader>", "d", "p"],
+      "commands": ["workbench.action.debug.pause"]
+    },
+    {
+      "before": ["<Leader>", "d", "r"],
+      "commands": ["workbench.action.debug.restart"]
+    },
+    {
+      "before": ["<Leader>", "d", "h"],
+      "commands": ["editor.debug.action.showDebugHover"]
+    },
+    {
+      "before": ["<Leader>", "d", "s"],
+      "commands": ["workbench.action.debug.start"]
+    },
+    {
+      "before": ["<Leader>", "d", "i"],
+      "commands": ["workbench.action.debug.stepInto"]
+    },
+    {
+      "before": ["<Leader>", "d", "u"],
+      "commands": ["workbench.action.debug.stepOut"]
+    },
+    {
+      "before": ["<Leader>", "d", "o"],
+      "commands": ["workbench.action.debug.stepOver"]
+    },
+    {
+      "before": ["<Leader>", "d", "b"],
+      "commands": ["editor.debug.action.toggleBreakpoint"]
+    },
+    {
+      "before": ["<Leader>", "d", "x"],
+      "commands": ["workbench.action.debug.stop"]
+    },
+    {
+      "before": ["<Leader>", "d", "a", "l"],
+      "commands": ["editor.debug.action.addLogPoint"]
+    },
+    {
+      "before": ["<Leader>", "d", "a", "f"],
+      "commands": ["workbench.debug.viewlet.action.addFunctionBreakpointAction"]
+    },
+    {
+      "before": ["<Leader>", "d", "a", "c"],
+      "commands": ["editor.debug.action.conditionalBreakpoint"]
+    },
+    {
+      "before": ["<Leader>", "d", "a", "i"],
+      "commands": ["editor.debug.action.toggleInlineBreakpoint"]
+    },
+    {
+      "before": ["<Leader>", "d", "e", "b"],
+      "commands": ["workbench.debug.viewlet.action.enableAllBreakpoints"]
+    },
+    {
+      "before": ["<Leader>", "d", "d", "b"],
+      "commands": ["workbench.debug.viewlet.action.disableAllBreakpoints"]
+    },
+    {
+      "before": ["<Leader>", "d", "r", "b"],
+      "commands": ["workbench.debug.viewlet.action.removeAllBreakpoints"]
+    },
+    {
+      "before": ["<Leader>", "d", "n"],
+      "commands": ["editor.debug.action.goToNextBreakpoint"]
+    },
+    {
+      "before": ["<Leader>", "d", "N"],
+      "commands": ["editor.debug.action.goToPreviousBreakpoint"]
     }
   ],
   "vim.visualModeKeyBindings": [
@@ -62,6 +477,30 @@
     {
       "before": ["<"],
       "commands": ["editor.action.outdentLines"]
+    },
+    {
+      "before": ["<Leader>", "a"],
+      "commands": ["editor.action.quickFix"]
+    },
+    {
+      "before": ["<Leader>", "d"],
+      "commands": ["editor.action.duplicateSelection"]
+    },
+    {
+      "before": ["<Leader>", "g", "s"],
+      "commands": ["git.stageSelectedRanges"]
+    },
+    {
+      "before": ["<Leader>", "g", "u"],
+      "commands": ["git.unstageSelectedRanges"]
+    },
+    {
+      "before": ["<Leader>", "g", "r"],
+      "commands": ["git.revertSelectedRanges"]
+    },
+    {
+      "before": ["leader", "m", "c", "a"],
+      "commands": ["merge-conflict.accept.selection"]
     }
   ],
   "terminal.integrated.fontFamily": "MesloLGS NF",
