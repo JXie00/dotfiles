@@ -1,7 +1,7 @@
 {
   "workbench.colorTheme": "Palenight Theme",
   "workbench.editor.highlightModifiedTabs": true,
-  "editor.scrollBeyondLastLine": false,
+  "editor.scrollBeyondLastLine": true,
   "vim.useSystemClipboard": true,
   "vim.leader": " ",
   "vim.incsearch": true,
@@ -30,12 +30,20 @@
       "commands": ["editor.action.marker.prevInFiles"]
     },
     {
-      "before": ["<Leader>", "t", "n"],
+      "before": ["<Leader>", "k"],
       "commands": ["workbench.action.nextEditor"]
     },
     {
-      "before": ["<Leader>", "t", "N"],
+      "before": ["<Leader>", "j"],
       "commands": ["workbench.action.previousEditor"]
+    },
+    {
+      "before": ["<Leader>", "a"],
+      "commands": ["editor.action.quickFix"]
+    },
+    {
+      "before": ["<Leader>", "e", "f"],
+      "commands": ["workbench.explorer.fileView.focus"]
     },
     {
       "before": ["<Leader>", "s", "h"],
@@ -54,11 +62,15 @@
       "commands": ["workbench.action.splitEditorRight"]
     },
     {
-      "before": ["<Leader>", "c", "e", "g"],
+      "before": ["<Leader>", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<Leader>", "b", "q"],
       "commands": ["workbench.action.closeEditorsAndGroup"]
     },
     {
-      "before": ["<Leader>", "c", "o", "e"],
+      "before": ["<Leader>", "b", "k"],
       "commands": ["workbench.action.closeOtherEditors"]
     },
     {
@@ -66,19 +78,11 @@
       "commands": ["revealInExplorer"]
     },
     {
-      "before": ["<Leader>", "a"],
-      "commands": ["editor.action.quickFix"]
-    },
-    {
-      "before": ["<Leader>", "q"],
-      "commands": ["workbench.action.closeActiveEditor"]
-    },
-    {
-      "before": ["<leader>", "s"],
+      "before": ["<leader>", "s", "v"],
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
-      "before": ["leader", "c"],
+      "before": ["leader", "s", "c"],
       "commands": ["workbench.action.showCommands"]
     },
     {
@@ -104,8 +108,20 @@
       "commands": ["workbench.scm.focus"]
     },
     {
-      "before": ["leader", "g", "t", "l"],
-      "commands": ["timeline.focus"]
+      "before": ["leader", "g", "s"],
+      "commands": ["git.stage"]
+    },
+    {
+      "before": ["leader", "g", "S"],
+      "commands": ["git.stageAll"]
+    },
+    {
+      "before": ["leader", "g", "u", "s"],
+      "commands": ["git.unstage"]
+    },
+    {
+      "before": ["leader", "g", "u", "S"],
+      "commands": ["git.unstageAll"]
     },
     {
       "before": ["leader", "g", "i", "r"],
@@ -116,24 +132,12 @@
       "commands": ["git.ignore"]
     },
     {
-      "before": ["leader", "g", "p", "g"],
-      "commands": ["github.publish"]
-    },
-    {
       "before": ["leader", "g", "a", "r"],
       "commands": ["git.addRemote"]
     },
     {
       "before": ["leader", "g", "r", "r"],
       "commands": ["git.removeRemote"]
-    },
-    {
-      "before": ["leader", "g", "s", "c"],
-      "commands": ["git.stage"]
-    },
-    {
-      "before": ["leader", "g", "s", "a", "c"],
-      "commands": ["git.stageAll"]
     },
     {
       "before": ["leader", "g", "s", "a", "m"],
@@ -148,35 +152,15 @@
       "commands": ["git.stageAllUntracked"]
     },
     {
-      "before": ["leader", "g", "u", "c"],
-      "commands": ["git.unstage"]
-    },
-    {
-      "before": ["leader", "g", "u", "a", "c"],
-      "commands": ["git.unstageAll"]
-    },
-    {
-      "before": ["leader", "g", "c", "m"],
-      "commands": ["git.commit"]
-    },
-    {
-      "before": ["leader", "g", "c", "a"],
-      "commands": ["git.commitAll"]
-    },
-    {
-      "before": ["leader", "g", "c", "s"],
+      "before": ["leader", "g", "c", "c"],
       "commands": ["git.commitStaged"]
     },
     {
-      "before": ["leader", "g", "c", "e"],
-      "commands": ["git.commitEmpty"]
-    },
-    {
-      "before": ["leader", "g", "u", "l", "c"],
+      "before": ["leader", "g", "u", "c"],
       "commands": ["git.undoCommit"]
     },
     {
-      "before": ["leader", "g", "p", "h"],
+      "before": ["leader", "g", "p", "u"],
       "commands": ["git.push"]
     },
     {
@@ -184,20 +168,8 @@
       "commands": ["git.pushForce"]
     },
     {
-      "before": ["leader", "g", "p", "b", "t"],
-      "commands": ["git.pushTo"]
-    },
-    {
-      "before": ["leader", "g", "p", "b", "t", "f"],
-      "commands": ["git.pushToForce"]
-    },
-    {
       "before": ["leader", "g", "p", "l"],
       "commands": ["git.pull"]
-    },
-    {
-      "before": ["leader", "g", "P", "f"],
-      "commands": ["git.pullFrom"]
     },
     {
       "before": ["leader", "g", "P", "r"],
@@ -212,24 +184,12 @@
       "commands": ["git.branch"]
     },
     {
-      "before": ["leader", "g", "c", "b", "f"],
-      "commands": ["git.branchFrom"]
-    },
-    {
       "before": ["leader", "g", "d", "b"],
       "commands": ["git.deleteBranch"]
     },
     {
       "before": ["leader", "g", "m", "b"],
       "commands": ["git.merge"]
-    },
-    {
-      "before": ["leader", "g", "p", "b"],
-      "commands": ["git.publish"]
-    },
-    {
-      "before": ["leader", "g", "r", "b"],
-      "commands": ["git.renameBranch"]
     },
     {
       "before": ["leader", "g", "R", "b"],
@@ -246,10 +206,6 @@
     {
       "before": ["leader", "g", "c", "p"],
       "commands": ["git.cherryPick"]
-    },
-    {
-      "before": ["leader", "g", "d", "c"],
-      "commands": ["git.clean"]
     },
     {
       "before": ["leader", "g", "d", "a", "c"],
@@ -304,15 +260,11 @@
       "commands": ["git.pushTags"]
     },
     {
-      "before": ["leader", "g", "f", "f"],
+      "before": ["leader", "g", "f"],
       "commands": ["git.fetch"]
     },
     {
-      "before": ["leader", "g", "f", "p"],
-      "commands": ["git.fetchPrune"]
-    },
-    {
-      "before": ["leader", "g", "f", "f", "a", "r"],
+      "before": ["leader", "g", "F"],
       "commands": ["git.fetchAll"]
     },
     {
@@ -479,7 +431,7 @@
       "commands": ["editor.action.outdentLines"]
     },
     {
-      "before": ["<Leader>", "a"],
+      "before": ["<Leader>", "c", "a"],
       "commands": ["editor.action.quickFix"]
     },
     {
