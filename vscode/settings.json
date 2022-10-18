@@ -83,7 +83,7 @@
     },
     {
       "before": ["leader", "o"],
-      "commands": ["workbench.action.quickOpen"]
+      "commands": ["editor.action.organizeImports"]
     },
     {
       "before": ["leader", "p"],
@@ -148,7 +148,7 @@
       "commands": ["git.stageAllUntracked"]
     },
     {
-      "before": ["leader", "g", "c", "c"],
+      "before": ["leader", "g", "c"],
       "commands": ["git.commitStaged"]
     },
     {
@@ -423,7 +423,7 @@
       "commands": ["editor.action.outdentLines"]
     },
     {
-      "before": ["<Leader>", "c", "a"],
+      "before": ["<Leader>", "a"],
       "commands": ["editor.action.quickFix"]
     },
     {
