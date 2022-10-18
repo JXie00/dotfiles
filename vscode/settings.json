@@ -42,10 +42,6 @@
       "commands": ["editor.action.quickFix"]
     },
     {
-      "before": ["<Leader>", "e", "f"],
-      "commands": ["workbench.explorer.fileView.focus"]
-    },
-    {
       "before": ["<Leader>", "s", "h"],
       "commands": ["workbench.action.splitEditorLeft"]
     },
@@ -261,10 +257,6 @@
     },
     {
       "before": ["leader", "g", "f"],
-      "commands": ["git.fetch"]
-    },
-    {
-      "before": ["leader", "g", "F"],
       "commands": ["git.fetchAll"]
     },
     {
