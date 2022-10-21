@@ -30,6 +30,14 @@
       "commands": ["editor.action.marker.prevInFiles"]
     },
     {
+      "before": ["g", "n"],
+      "commands": ["workbench.action.editor.nextChange"]
+    },
+    {
+      "before": ["g", "N"],
+      "commands": ["workbench.action.editor.previousChange"]
+    },
+    {
       "before": ["<Leader>", "k"],
       "commands": ["workbench.action.nextEditor"]
     },

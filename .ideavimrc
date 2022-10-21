@@ -44,7 +44,6 @@ set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
-nnoremap gi :action GotoImplementation<CR>
 
 nnoremap zc :action CollapseRegion<CR>
 nnoremap zo :action ExpandRegion<CR>
@@ -52,9 +51,11 @@ nnoremap zo :action ExpandRegion<CR>
 nnoremap <leader>zc :action CollapseAllRegions<CR>
 nnoremap <leader>zo :action ExpandAllRegions<CR>
 
+nnoremap gi :action GotoImplementation<CR>
 nnoremap ge :action GotoNextError<CR>
 nnoremap gE :action GotoPreviousError<CR>
 nnoremap gs :action GotoSymbol<CR>
+nnoremap gc :action GotoClass<CR>
 
 nnoremap <leader>cb :action CommentByBlockComment<CR>
 nnoremap <leader>o :action OptimizeImports<CR>
@@ -62,12 +63,39 @@ nnoremap <leader>o :action OptimizeImports<CR>
 nnoremap <leader>j :action Back<CR>
 nnoremap <leader>k :action Forward<CR>
 nnoremap <leader>e :action ShowErrorDescription<CR>
-nnoremap <leader>gb :action Annotate<CR>
 nnoremap <leader>m :action ImplementMethods<CR>
 nnoremap <leader>gc :action Generate<CR>
 
+nnoremap <leader>q :action CloseEditor<CR>
+nnoremap <leader>bk :action CloseAllEditorsButActive<CR>
+
+nnoremap <leader>gb :action Annotate<CR>
+nnoremap <leader>sc :action Vcs.Show.Local.Changes<CR>
+nnoremap <leader>v :action Vcs.QuickListPopupAction<CR>
+nnoremap <leader>sh :action LocalHistory.ShowHistory<CR>
+nnoremap <leader>sd :action VcsShowCurrentChangeMarker<CR>
+nnoremap <leader>st :action Vcs.ShowTabbedFileHistory<CR>
+vmap <leader>h :action Vcs.ShowHistoryForBlock<CR>
+noremap <leader>gr :action Vcs.RollbackChangedLines<CR>
+
+nnoremap gn :action VcsShowNextChangeMarker<CR>
+nnoremap gN :action VcsShowPrevChangeMarker<CR>
+
+" nnoremap <leader>ti :action ExpressionTypeInfo<CR>
+" nnoremap <leader>pi :action ParameterInfo<CR>
+nnoremap fo :action FileStructurePopup<CR>
+nnoremap fu :action FindUsages<CR>
+nnoremap su :action ShowUsages<CR>
+
+noremap <leader><leader> :action SearchEverywhere<CR>
+
+nnoremap <leader>iv :action IntroduceVariable<CR>
+
+noremap <leader>a :action ShowIntentionActions<CR>
+
 " Refactoring
 :map <leader>rf :action Refactorings.QuickListPopupAction<CR>
+:map <leader>sw :action SurroundWith<CR>
 
 "" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
 "" Map \r to the Reformat Code action
