@@ -65,6 +65,9 @@ nnoremap <leader>k :action Forward<CR>
 nnoremap <leader>e :action ShowErrorDescription<CR>
 nnoremap <leader>m :action ImplementMethods<CR>
 nnoremap <leader>gc :action Generate<CR>
+nnoremap <leader>fp :action FindInPath<CR>
+nnoremap <leader>fb :action RecentFiles<CR>
+
 
 nnoremap <leader>q :action CloseEditor<CR>
 nnoremap <leader>bk :action CloseAllEditorsButActive<CR>
@@ -72,7 +75,7 @@ nnoremap <leader>bk :action CloseAllEditorsButActive<CR>
 nnoremap <leader>gb :action Annotate<CR>
 nnoremap <leader>sc :action Vcs.Show.Local.Changes<CR>
 nnoremap <leader>v :action Vcs.QuickListPopupAction<CR>
-nnoremap <leader>sh :action LocalHistory.ShowHistory<CR>
+nnoremap <leader>H :action LocalHistory.ShowHistory<CR>
 nnoremap <leader>sd :action VcsShowCurrentChangeMarker<CR>
 nnoremap <leader>st :action Vcs.ShowTabbedFileHistory<CR>
 vmap <leader>h :action Vcs.ShowHistoryForBlock<CR>
