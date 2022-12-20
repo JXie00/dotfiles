@@ -41,6 +41,7 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
@@ -51,6 +52,7 @@ require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'omnisharp/omnisharp-vim'
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -224,7 +226,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'help' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -326,8 +328,8 @@ local on_attach = function(_, bufnr)
   nmap('<C-k>', '<C-w>k')
   nmap('<C-l>', '<C-w>l')
 
-  nmap('<leader>s' ,':split<cr>')
-  nmap('<leader>S' ,':vsplit<cr>')
+  nmap('<leader>wh' ,':split<cr>')
+  nmap('<leader>wv' ,':vsplit<cr>')
   nmap('<leader>q' ,':bd<cr>')
 
   -- Lesser used LSP functionality
@@ -353,7 +355,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls' , 'omnisharp' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
