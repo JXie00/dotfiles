@@ -20,7 +20,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
-Plug 'dense-analysis/ale'
+
 
 call plug#end()
 
@@ -46,7 +46,6 @@ function! s:on_lsp_buffer_enabled() abort
 
     " refer to doc to add more commands
 endfunction
-
 
 
 let mapleader = " "
@@ -94,6 +93,7 @@ map <leader>h :bprevious<cr>
 
 
 nnoremap <leader><leader> :Buffers<cr>
+nnoremap <leader>, :Files %:p:h<cr>
 
 nnoremap <leader>fw :Windows<cr>
 
