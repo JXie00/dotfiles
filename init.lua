@@ -217,11 +217,11 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -316,8 +316,8 @@ local on_attach = function(_, bufnr)
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('gs', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>gs', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -328,10 +328,20 @@ local on_attach = function(_, bufnr)
   nmap('<C-j>', '<C-w>j')
   nmap('<C-k>', '<C-w>k')
   nmap('<C-l>', '<C-w>l')
+  nmap('<C-up>', '<c-w>+')
+  nmap('<C-down>', '<c-w>-')
+  nmap('<C-left>', '<c-w>>')
+  nmap('<C-right>', '<c-w><')
 
-  nmap('<leader>wh' ,':split<cr>')
-  nmap('<leader>wv' ,':vsplit<cr>')
+
   nmap('<leader>bk' ,':bd<cr>')
+  nmap('<leader>tn', ':tabnew<cr>')
+  nmap('<leader>to', ':tabonly<cr>')
+  nmap('<leader>tm', ':tabmove')
+  nmap('<leader>ws' ,':split<cr>')
+  nmap('<leader>wS', ':vsplit<cr>')
+  nmap('<leader>l' ,':bnext<cr>')
+  nmap('<leader>h' ,':bprevious<cr>')
 
   nmap('<C-s>', ':w<cr>')
 
