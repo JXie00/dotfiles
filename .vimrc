@@ -20,6 +20,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -107,6 +108,8 @@ nnoremap <leader>fh :Helptags<cr>
 nnoremap <leader>ff :Files<cr>
 
 nnoremap <leader>/ :BLines<cr>
+
+nnoremap <leader>fg :Rg<cr>
 
 
 
