@@ -24,6 +24,11 @@ require('packer').startup(function(use)
     },
   }
 
+  
+
+use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  require("toggleterm").setup()
+end}
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -145,8 +150,9 @@ vim.keymap.set('n', '<C-up>', '<c-w>+')
 vim.keymap.set('n', '<C-down>', '<c-w>-')
 vim.keymap.set('n', '<C-left>', '<c-w>>')
 vim.keymap.set('n', '<C-right>', '<c-w><')
-vim.keymap.set('n', '<leader>bk', ':bd<cr>')
+vim.keymap.set('n', '<leader>q', ':bd<cr>')
 vim.keymap.set('n', '<leader>tn', ':tabnew<cr>')
+vim.keymap.set('n', '<leader>tt', ':ToggleTerm<cr>')
 vim.keymap.set('n', '<leader>to', ':tabonly<cr>')
 vim.keymap.set('n', '<leader>tm', ':tabmove')
 vim.keymap.set('n', '<leader>ws', ':split<cr>')
@@ -154,7 +160,23 @@ vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
 vim.keymap.set('n', '<leader>l', ':bnext<cr>')
 vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
 vim.keymap.set('n', '<C-s>', ':w<cr>')
+
+
 vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
+
+
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 
 -- Keymaps for better default experience
@@ -369,7 +391,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls', 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'omnisharp' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
