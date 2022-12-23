@@ -3,7 +3,7 @@ local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nv
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   is_bootstrap = true
-  vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
   vim.cmd [[packadd packer.nvim]]
 end
 
@@ -23,6 +23,7 @@ require('packer').startup(function(use)
       'j-hui/fidget.nvim',
     },
   }
+
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -53,6 +54,7 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use 'omnisharp/omnisharp-vim'
+  use 'folke/tokyonight.nvim'
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -120,7 +122,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -134,7 +136,25 @@ vim.g.maplocalleader = ' '
 
 vim.keymap.set('i', 'jk', '<ESC>')
 
+vim.keymap.set('n', '<C-h>', '<C-w>h')
 
+vim.keymap.set('n', '<C-j>', '<C-w>j')
+vim.keymap.set('n', '<C-k>', '<C-w>k')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set('n', '<C-up>', '<c-w>+')
+vim.keymap.set('n', '<C-down>', '<c-w>-')
+vim.keymap.set('n', '<C-left>', '<c-w>>')
+vim.keymap.set('n', '<C-right>', '<c-w><')
+vim.keymap.set('n', '<leader>bk', ':bd<cr>')
+vim.keymap.set('n', '<leader>tn', ':tabnew<cr>')
+vim.keymap.set('n', '<leader>to', ':tabonly<cr>')
+vim.keymap.set('n', '<leader>tm', ':tabmove')
+vim.keymap.set('n', '<leader>ws', ':split<cr>')
+vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
+vim.keymap.set('n', '<leader>l', ':bnext<cr>')
+vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
+vim.keymap.set('n', '<C-s>', ':w<cr>')
+vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
 
 
 -- Keymaps for better default experience
@@ -156,12 +176,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+
 -- Set lualine as statusline
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'dracula',
     component_separators = '|',
     section_separators = '',
   },
@@ -324,28 +345,6 @@ local on_attach = function(_, bufnr)
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 
-  nmap('<C-h>', '<C-w>h')
-  nmap('<C-j>', '<C-w>j')
-  nmap('<C-k>', '<C-w>k')
-  nmap('<C-l>', '<C-w>l')
-  nmap('<C-up>', '<c-w>+')
-  nmap('<C-down>', '<c-w>-')
-  nmap('<C-left>', '<c-w>>')
-  nmap('<C-right>', '<c-w><')
-
-
-  nmap('<leader>bk' ,':bd<cr>')
-  nmap('<leader>tn', ':tabnew<cr>')
-  nmap('<leader>to', ':tabonly<cr>')
-  nmap('<leader>tm', ':tabmove')
-  nmap('<leader>ws' ,':split<cr>')
-  nmap('<leader>wS', ':vsplit<cr>')
-  nmap('<leader>l' ,':bnext<cr>')
-  nmap('<leader>h' ,':bprevious<cr>')
-
-  nmap('<C-s>', ':w<cr>')
-
-  vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -370,7 +369,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls' , 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls', 'omnisharp' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
