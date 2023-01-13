@@ -38,11 +38,22 @@ set incsearch
 set visualbell
 set noerrorbells
 
+
+set surround
+
+set highlightedyank
+
+set easymotion
+
+set notimeout
+
+set which-key
+
 " Show matching brackets when text indicator is over them
-set showmatch
+" set showmatch
  
 " How many tenths of a second to blink when matching brackets
-set mat=2
+" set mat=2
 
 
 nnoremap zc :action CollapseRegion<CR>
@@ -65,6 +76,8 @@ nnoremap <leader>j :action Back<CR>
 nnoremap <leader>k :action Forward<CR>
 nnoremap <leader>fp :action FindInPath<CR>
 nnoremap <leader>fb :action RecentFiles<CR>
+nnoremap gp :action GotToSuperMethod<CR>
+nnoremap <leader>gt :action GotoTest<CR>
 
 " utility
 nnoremap <leader>o :action OptimizeImports<CR>
@@ -91,8 +104,8 @@ nnoremap <leader>vc :action Git.CompareWithBranch<CR>
 
 
 
-" nnoremap <leader>ti :action ExpressionTypeInfo<CR>
-" nnoremap <leader>pi :action ParameterInfo<CR>
+nnoremap <leader>ti :action ExpressionTypeInfo<CR>
+nnoremap <leader>pi :action ParameterInfo<CR>
 nnoremap fo :action FileStructurePopup<CR>
 nnoremap fu :action FindUsages<CR>
 nnoremap su :action ShowUsages<CR>
@@ -133,6 +146,21 @@ nnoremap <C-j> :action StepOver<CR>
 nnoremap <C-k> :action Resume<CR>
 nnoremap <C-h> :action StepOut<CR>
 nnoremap <C-l> :action ForceStepInto<CR>
+
+
+" Extract
+map <leader>/ <Plug>(easymotion-s)
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>T :action Terminal.OpenInTerminal<CR>
+nnoremap <leader>ch :action CallHierarchy<CR>
+
+
+
+
+
+
+
+
 
 
 
