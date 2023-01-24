@@ -172,7 +172,8 @@ vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
 vim.keymap.set('n', '<leader>l', ':bnext<cr>')
 vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
 vim.keymap.set('n', '<C-s>', ':w<cr>')
-vim.keymap.set('n', '<leader>wc', ':only<cr>')
+vim.keymap.set('n', '<leader>wc', ':<C-W>q<cr>')
+vim.keymap.set('n', '<leader>wC', ':only<cr>')
 
 
 vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
