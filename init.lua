@@ -71,6 +71,7 @@ end}
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
+  use 'OmniSharp/omnisharp-vim'
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -281,7 +282,7 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
-vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'lists git commits with diff preview, ' })
 vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits, { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
 vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches, { desc = 'List all branches with diff view' })
 vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Lists current changes per file with diff preview and add action' })
@@ -412,7 +413,9 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
+
+
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -422,6 +425,22 @@ require('mason-lspconfig').setup {
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+local pid = vim.fn.getpid()
+
+local omnisharp_bin ="/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run" 
+
+
+require('lspconfig').omnisharp.setup {
+  cmd = {omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid)},
+  on_attach = on_attach,
+   omnisharp = {
+    useModernNet = false,
+    monoPath = "/usr/bin/mono"
+  },
+  capabilities = capabilities
+}
+
 
 for _, lsp in ipairs(servers) do
   require('lspconfig')[lsp].setup {
