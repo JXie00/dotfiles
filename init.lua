@@ -70,7 +70,6 @@ end}
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
-  use 'omnisharp/omnisharp-vim'
   use 'folke/tokyonight.nvim'
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -279,6 +278,14 @@ vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+
+
+vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
+vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits, { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
+vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches, { desc = 'List all branches with diff view' })
+vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Lists current changes per file with diff preview and add action' })
+
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
