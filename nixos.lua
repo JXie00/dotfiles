@@ -288,7 +288,26 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
-vim.keymap.set('n', '<leader>.', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+
+vim.keymap.set('n', '<leader>.', function()
+  opts = {}
+  opts.cwd = vim.fn.expand('%:p:h')
+  require'telescope.builtin'.find_files(opts)
+end, { desc = '[S]earch [F]iles' })
+
+vim.keymap.set('n', '<leader>ff', function()
+  vim.api.nvim_set_current_dir(vim.fn.expand('%:p:h'))
+  opts = {}
+  opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] 
+  if vim.v.shell_error ~= 0 then
+    -- if not git then active lsp client root
+    -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
+    opts.cwd = vim.lsp.get_active_clients()[1].config.root_dir
+  end
+  require'telescope.builtin'.find_files(opts)
+end, { desc = '[S]earch git [F]iles' })
+
+
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
