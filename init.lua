@@ -133,6 +133,13 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+vim.bo.tabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.expandtab = true
+-- install xclip for clipboard to work in nvim
+vim.o.clipboard = 'unnamedplus'
+
+
 -- Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
