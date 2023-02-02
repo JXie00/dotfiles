@@ -88,6 +88,10 @@ end}
   use 'folke/tokyonight.nvim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+  use {"ellisonleao/glow.nvim", config = function() require("glow").setup({
+    style = "dark",
+  })
+  end}
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }

@@ -74,6 +74,11 @@ end}
   use 'OmniSharp/omnisharp-vim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+  use {"ellisonleao/glow.nvim", config = function() require("glow").setup({
+    style = "dark",
+  })
+  end}
+
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -293,7 +298,7 @@ end, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>ff', function()
   vim.api.nvim_set_current_dir(vim.fn.expand('%:p:h'))
   opts = {}
-  opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] 
+  opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   if vim.v.shell_error ~= 0 then
     -- if not git then active lsp client root
     -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
@@ -455,7 +460,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local pid = vim.fn.getpid()
 
-local omnisharp_bin ="/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run" 
+local omnisharp_bin ="/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run"
 
 
 require('lspconfig').omnisharp.setup {
