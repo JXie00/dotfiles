@@ -30,32 +30,32 @@ require('packer').startup(function(use)
     },
   }
 
-use {
-  "folke/which-key.nvim",
-  config = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-    require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
-use {
-  'nvim-tree/nvim-tree.lua',
-  requires = {
-    'nvim-tree/nvim-web-devicons', -- optional, for file icons
-  },
-require("nvim-tree").setup(),
-  tag = 'nightly' -- optional, updated every week. (see issue #1193)
-}
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+    require("nvim-tree").setup(),
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
 
 
-use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-  require("toggleterm").setup()
-end}
+  use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup()
+  end }
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -88,10 +88,10 @@ end}
   use 'folke/tokyonight.nvim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use {"ellisonleao/glow.nvim", config = function() require("glow").setup({
-    style = "dark",
-  })
-  end}
+  use { "ellisonleao/glow.nvim", config = function() require("glow").setup({
+      style = "dark",
+    })
+  end }
   use 'f-person/git-blame.nvim'
 
 
@@ -199,7 +199,7 @@ vim.keymap.set('n', '<leader>ws', ':split<cr>')
 vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
 vim.keymap.set('n', '<leader>l', ':bnext<cr>')
 vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
-vim.keymap.set('n', '<C-s>', ':w<cr>')
+vim.keymap.set('n', '<C-s>', ':Format<cr>|:w<cr>')
 vim.keymap.set('n', '<leader>wc', ':<C-W>q<cr>')
 vim.keymap.set('n', '<leader>wC', ':only<cr>')
 
@@ -208,7 +208,7 @@ vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
 
 
 function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
+  local opts = { buffer = 0 }
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
@@ -306,19 +306,19 @@ end, { desc = '[/] Fuzzily search in current buffer]' })
 vim.keymap.set('n', '<leader>.', function()
   opts = {}
   opts.cwd = vim.fn.expand('%:p:h')
-  require'telescope.builtin'.find_files(opts)
+  require 'telescope.builtin'.find_files(opts)
 end, { desc = '[S]earch [F]iles' })
 
 vim.keymap.set('n', '<leader>ff', function()
   vim.api.nvim_set_current_dir(vim.fn.expand('%:p:h'))
   opts = {}
-  opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] 
+  opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   if vim.v.shell_error ~= 0 then
     -- if not git then active lsp client root
-    -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
+    -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps
     opts.cwd = vim.lsp.get_active_clients()[1].config.root_dir
   end
-  require'telescope.builtin'.find_files(opts)
+  require 'telescope.builtin'.find_files(opts)
 end, { desc = '[S]earch git [F]iles' })
 
 
@@ -329,10 +329,14 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
-vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
-vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits, { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
-vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches, { desc = 'List all branches with diff view' })
-vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Lists current changes per file with diff preview and add action' })
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits,
+  { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
+vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits,
+  { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
+vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches,
+  { desc = 'List all branches with diff view' })
+vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
+  { desc = 'Lists current changes per file with diff preview and add action' })
 
 
 -- [[ Configure Treesitter ]]
@@ -463,7 +467,7 @@ require('mason').setup()
 local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
 
 require('lspconfig').omnisharp.setup {
-  cmd = {"/home/jet/.nix-profile/bin/OmniSharp"},
+  cmd = { "/home/jet/.nix-profile/bin/OmniSharp" },
   on_attach = on_attach,
   capabilities = capabilities,
 }

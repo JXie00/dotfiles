@@ -24,23 +24,23 @@ require('packer').startup(function(use)
     },
   }
 
-use {
-  "folke/which-key.nvim",
-  config = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-    require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
 
-use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-  require("toggleterm").setup()
-end}
+  use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup()
+  end }
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -74,10 +74,10 @@ end}
   use 'OmniSharp/omnisharp-vim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use {"ellisonleao/glow.nvim", config = function() require("glow").setup({
-    style = "dark",
-  })
-  end}
+  use { "ellisonleao/glow.nvim", config = function() require("glow").setup({
+      style = "dark",
+    })
+  end }
 
   use 'f-person/git-blame.nvim'
 
@@ -186,7 +186,7 @@ vim.keymap.set('n', '<leader>ws', ':split<cr>')
 vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
 vim.keymap.set('n', '<leader>l', ':bnext<cr>')
 vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
-vim.keymap.set('n', '<C-s>', ':w<cr>')
+vim.keymap.set('n', '<C-s>', ':Format<cr>|:w<cr>')
 vim.keymap.set('n', '<leader>wc', ':<C-W>q<cr>')
 vim.keymap.set('n', '<leader>wC', ':only<cr>')
 
@@ -195,7 +195,7 @@ vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
 
 
 function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
+  local opts = { buffer = 0 }
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
@@ -293,7 +293,7 @@ end, { desc = '[/] Fuzzily search in current buffer]' })
 vim.keymap.set('n', '<leader>.', function()
   opts = {}
   opts.cwd = vim.fn.expand('%:p:h')
-  require'telescope.builtin'.find_files(opts)
+  require 'telescope.builtin'.find_files(opts)
 end, { desc = '[S]earch [F]iles' })
 
 vim.keymap.set('n', '<leader>ff', function()
@@ -302,10 +302,10 @@ vim.keymap.set('n', '<leader>ff', function()
   opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   if vim.v.shell_error ~= 0 then
     -- if not git then active lsp client root
-    -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
+    -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps
     opts.cwd = vim.lsp.get_active_clients()[1].config.root_dir
   end
-  require'telescope.builtin'.find_files(opts)
+  require 'telescope.builtin'.find_files(opts)
 end, { desc = '[S]earch git [F]iles' })
 
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
@@ -315,10 +315,14 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
-vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits, { desc = 'lists git commits with diff preview, ' })
-vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits, { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
-vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches, { desc = 'List all branches with diff view' })
-vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Lists current changes per file with diff preview and add action' })
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits,
+  { desc = 'lists git commits with diff preview, ' })
+vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits,
+  { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
+vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches,
+  { desc = 'List all branches with diff view' })
+vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
+  { desc = 'Lists current changes per file with diff preview and add action' })
 
 
 -- [[ Configure Treesitter ]]
@@ -461,13 +465,13 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local pid = vim.fn.getpid()
 
-local omnisharp_bin ="/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run"
+local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run"
 
 
 require('lspconfig').omnisharp.setup {
-  cmd = {omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid)},
+  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
   on_attach = on_attach,
-   omnisharp = {
+  omnisharp = {
     useModernNet = false,
     monoPath = "/usr/bin/mono"
   },
