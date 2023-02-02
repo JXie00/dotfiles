@@ -72,6 +72,8 @@ end}
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
   use 'OmniSharp/omnisharp-vim'
+  use 'tpope/vim-surround'
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
