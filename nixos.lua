@@ -53,10 +53,10 @@ require('packer').startup(function(use)
       update_focused_file = {
         enable = true,
         update_cwd = false,
-    },
-    filesystem_watchers = {
+      },
+      filesystem_watchers = {
         enable = true,
-    },
+      },
     }),
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
@@ -373,10 +373,10 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
-vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits,
-  { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
-vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits,
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_bcommits,
   { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
+vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_commits,
+  { desc = 'Lists git commits with diff preview, checkout action <cr>, reset mixed <C-r>m, reset soft <C-r>s and reset hard <C-r>h' })
 vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches,
   { desc = 'List all branches with diff view' })
 vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,

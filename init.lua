@@ -350,10 +350,10 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
-vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_commits,
-  { desc = 'lists git commits with diff preview, ' })
-vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_bcommits,
+vim.keymap.set('n', '<leader>gc', require('telescope.builtin').git_bcommits,
   { desc = 'Lists buffers git commits with diff preview and checks them out on <cr>' })
+vim.keymap.set('n', '<leader>gC', require('telescope.builtin').git_commits,
+  { desc = 'lists git commits with diff preview, ' })
 vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches,
   { desc = 'List all branches with diff view' })
 vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
