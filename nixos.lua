@@ -48,7 +48,16 @@ require('packer').startup(function(use)
     requires = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    require("nvim-tree").setup(),
+    require("nvim-tree").setup({
+      update_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_cwd = false,
+    },
+    filesystem_watchers = {
+        enable = true,
+    },
+    }),
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
@@ -503,6 +512,10 @@ local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua
 
 require('lspconfig').omnisharp.setup {
   cmd = { "/home/jet/.nix-profile/bin/OmniSharp" },
+  omnisharp = {
+    useModernNet = false,
+    monoPath = "/home/jet/.nix-profile/bin/mono"
+  },
   on_attach = on_attach,
   capabilities = capabilities,
 }
