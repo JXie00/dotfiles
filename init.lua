@@ -80,6 +80,8 @@ require('packer').startup(function(use)
   end }
 
   use 'f-person/git-blame.nvim'
+  use 'mfussenegger/nvim-jdtls'
+
 
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -364,7 +366,7 @@ vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'java','help' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -485,7 +487,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'lua_ls' , 'jdtls'}
 
 
 
@@ -531,7 +533,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
