@@ -74,12 +74,15 @@ require('packer').startup(function(use)
   use 'OmniSharp/omnisharp-vim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use { "ellisonleao/glow.nvim", config = function() require("glow").setup({
+  use { "ellisonleao/glow.nvim", config = function()
+    require("glow").setup({
       style = "dark",
     })
   end }
 
   use 'f-person/git-blame.nvim'
+  use 'mfussenegger/nvim-jdtls'
+
 
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -155,6 +158,8 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd [[colorscheme tokyonight-moon]]
+
+vim.g.OmniSharp_server_use_net6 = 1
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -364,7 +369,7 @@ vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'java', 'help' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -453,8 +458,8 @@ local on_attach = function(_, bufnr)
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('gs', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>gs', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('fo', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>fo', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -485,7 +490,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'lua_ls', 'jdtls' }
 
 
 
@@ -500,14 +505,14 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local pid = vim.fn.getpid()
 
-local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/run"
+local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/OmniSharp"
 
 
 require('lspconfig').omnisharp.setup {
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
   on_attach = on_attach,
   omnisharp = {
-    useModernNet = false,
+    useModernNet = true,
     monoPath = "/usr/bin/mono"
   },
   capabilities = capabilities
@@ -531,7 +536,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -566,7 +571,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -585,8 +590,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
