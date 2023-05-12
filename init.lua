@@ -12,7 +12,7 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use { -- LSP Configuration & Plugins
+  use {   -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
@@ -37,24 +37,36 @@ require('packer').startup(function(use)
     end
   }
 
+  vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",       -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    }
+  }
+
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end }
 
-  use { -- Autocompletion
+  use {   -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
-  use { -- Highlight, edit, and navigate code
+  use {   -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
 
-  use { -- Additional text objects via treesitter
+  use {   -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
@@ -65,11 +77,11 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'navarasu/onedark.nvim'                 -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'             -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim'   -- Add indentation guides even on blank lines
+  use 'numToStr/Comment.nvim'                 -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                      -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
   use 'OmniSharp/omnisharp-vim'
   use 'tpope/vim-surround'
@@ -81,8 +93,6 @@ require('packer').startup(function(use)
   end }
 
   use 'f-person/git-blame.nvim'
-  use 'mfussenegger/nvim-jdtls'
-
 
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -159,10 +169,10 @@ vim.wo.signcolumn = 'yes'
 vim.o.termguicolors = true
 vim.cmd [[colorscheme tokyonight-moon]]
 
-vim.g.OmniSharp_server_use_net6 = 1
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
+
+vim.g.OmniSharp_server_use_net6 = 1
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -183,21 +193,22 @@ vim.keymap.set('n', '<C-down>', '<c-w>-')
 vim.keymap.set('n', '<C-left>', '<c-w>>')
 vim.keymap.set('n', '<C-right>', '<c-w><')
 vim.keymap.set('n', '<leader>q', ':bd<cr>')
+vim.keymap.set('n', '<leader>Q', ':bd!<cr>')
 vim.keymap.set('n', '<leader>tn', ':tabnew<cr>')
 vim.keymap.set('n', '<leader>tt', ':ToggleTerm<cr>')
 vim.keymap.set('n', '<leader>to', ':tabonly<cr>')
 vim.keymap.set('n', '<leader>tm', ':tabmove')
 vim.keymap.set('n', '<leader>ws', ':split<cr>')
 vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
-vim.keymap.set('n', '<leader>l', ':bnext<cr>')
-vim.keymap.set('n', '<leader>h', ':bprevious<cr>')
+vim.keymap.set('n', '<leader>wS', ':vsplit<cr>')
+vim.keymap.set('n', '<leader>k', ':bnext<cr>')
+vim.keymap.set('n', '<leader>j', ':bprevious<cr>')
 vim.keymap.set('n', '<C-s>', ':Format<cr>|:w<cr>')
 vim.keymap.set('n', '<leader>wc', ':<C-W>q<cr>')
 vim.keymap.set('n', '<leader>wC', ':only<cr>')
 
 
 vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
-
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
@@ -289,13 +300,15 @@ require('gitsigns').setup {
     -- Actions
     map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
     map({ 'n', 'v' }, '<leader>gr', ':Gitsigns reset_hunk<CR>')
-    map('n', '<leader>hS', gs.stage_buffer)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
-    map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line { full = true } end)
-    map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hS', gs.stage_buffer, { desc = '[] git stage buffer' })
+    map('n', '<leader>hu', gs.undo_stage_hunk, { desc = '[] git undo staged hunk' })
+    map('n', '<leader>hR', gs.reset_buffer, { desc = '[] git reset buffer' })
+    map('n', '<leader>hp', gs.preview_hunk, { desc = '[] git preview hunk' })
+    map('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = '[] git blame current line' })
+    map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = '[] git toggle current line blame' })
+    map('n', '<leader>hd', gs.diffthis, { desc = '[] git view diff of current buffer' })
+    map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = '[] git view diff of current project' })
+    map('n', '<leader>td', gs.toggle_deleted, { desc = '[] git toggle deleted' })
     map('n', '<leader>hD', function() gs.diffthis('~') end)
     map('n', '<leader>td', gs.toggle_deleted)
   end
@@ -369,7 +382,8 @@ vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'java', 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'nix', 'bash', 'java',
+    'graphql' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -385,7 +399,7 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,       -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
         ['aa'] = '@parameter.outer',
@@ -398,7 +412,7 @@ require('nvim-treesitter.configs').setup {
     },
     move = {
       enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
+      set_jumps = true,       -- whether to set jumps in the jumplist
       goto_next_start = {
         [']m'] = '@function.outer',
         [']]'] = '@class.outer',
@@ -432,7 +446,8 @@ require('nvim-treesitter.configs').setup {
 vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>fD', vim.diagnostic.setloclist)
+
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -463,9 +478,6 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -490,7 +502,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'lua_ls', 'jdtls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'rnix', 'bashls', 'jdtls', 'graphql' }
 
 
 
@@ -510,7 +522,83 @@ local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/OmniSharp
 
 require('lspconfig').omnisharp.setup {
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-  on_attach = on_attach,
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    _.server_capabilities.semanticTokensProvider = {
+      full = vim.empty_dict(),
+      legend = {
+        tokenModifiers = { "static_symbol" },
+        tokenTypes = {
+          "comment",
+          "excluded_code",
+          "identifier",
+          "keyword",
+          "keyword_control",
+          "number",
+          "operator",
+          "operator_overloaded",
+          "preprocessor_keyword",
+          "string",
+          "whitespace",
+          "text",
+          "static_symbol",
+          "preprocessor_text",
+          "punctuation",
+          "string_verbatim",
+          "string_escape_character",
+          "class_name",
+          "delegate_name",
+          "enum_name",
+          "interface_name",
+          "module_name",
+          "struct_name",
+          "type_parameter_name",
+          "field_name",
+          "enum_member_name",
+          "constant_name",
+          "local_name",
+          "parameter_name",
+          "method_name",
+          "extension_method_name",
+          "property_name",
+          "event_name",
+          "namespace_name",
+          "label_name",
+          "xml_doc_comment_attribute_name",
+          "xml_doc_comment_attribute_quotes",
+          "xml_doc_comment_attribute_value",
+          "xml_doc_comment_cdata_section",
+          "xml_doc_comment_comment",
+          "xml_doc_comment_delimiter",
+          "xml_doc_comment_entity_reference",
+          "xml_doc_comment_name",
+          "xml_doc_comment_processing_instruction",
+          "xml_doc_comment_text",
+          "xml_literal_attribute_name",
+          "xml_literal_attribute_quotes",
+          "xml_literal_attribute_value",
+          "xml_literal_cdata_section",
+          "xml_literal_comment",
+          "xml_literal_delimiter",
+          "xml_literal_embedded_expression",
+          "xml_literal_entity_reference",
+          "xml_literal_name",
+          "xml_literal_processing_instruction",
+          "xml_literal_text",
+          "regex_comment",
+          "regex_character_class",
+          "regex_anchor",
+          "regex_quantifier",
+          "regex_grouping",
+          "regex_alternation",
+          "regex_text",
+          "regex_self_escaped_character",
+          "regex_other_escape",
+        },
+      },
+      range = true,
+    }
+  end,
   omnisharp = {
     useModernNet = true,
     monoPath = "/usr/bin/mono"
@@ -571,7 +659,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -590,8 +678,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -604,4 +692,18 @@ cmp.setup {
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
 -- vim: ts=2 sts=2 sw=2 et
