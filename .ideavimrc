@@ -74,8 +74,19 @@ nnoremap gN :action VcsShowPrevChangeMarker<CR>
 nnoremap <leader>cb :action CommentByBlockComment<CR>
 nnoremap <leader>j :action Back<CR>
 nnoremap <leader>k :action Forward<CR>
-nnoremap <leader>fp :action FindInPath<CR>
-nnoremap <leader>fb :action RecentFiles<CR>
+nnoremap <leader>fg :action FindInPath<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+
+nnoremap <leader>rF :action RecentChangedFiles<CR>
+nnoremap <leader>fo :action GotoSymbol<CR>
+
+nnoremap <leader>/ :action Find<CR>
+
+nnoremap <leader>? :action RecentFiles<CR>
+
+nnoremap <leader>pr :action ManageRecentProjects<CR>
+nnoremap <leader>pl :action RecentProjectListGroup<CR>
+
 nnoremap gp :action GotToSuperMethod<CR>
 nnoremap <leader>gt :action GotoTest<CR>
 
@@ -149,7 +160,6 @@ nnoremap <C-l> :action ForceStepInto<CR>
 
 
 " Extract
-map <leader>/ <Plug>(easymotion-s)
 nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
 nnoremap <leader>T :action Terminal.OpenInTerminal<CR>
 nnoremap <leader>ch :action CallHierarchy<CR>
