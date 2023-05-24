@@ -56,7 +56,8 @@ require('packer').startup(function(use)
 
   use {   -- Autocompletion
     'hrsh7th/nvim-cmp',
-    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path' },
   }
 
   use {   -- Highlight, edit, and navigate code
@@ -77,13 +78,15 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
+  use 'OmniSharp/omnisharp-vim'
+  use 'nickspoons/vim-sharpenup'
+
   use 'navarasu/onedark.nvim'                 -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim'             -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim'   -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim'                 -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth'                      -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
-  use 'OmniSharp/omnisharp-vim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
   use { "ellisonleao/glow.nvim", config = function()
@@ -170,9 +173,23 @@ vim.o.termguicolors = true
 vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menuone,noselect,noinsert'
 
 vim.g.OmniSharp_server_use_net6 = 1
+vim.g.OmniSharp_popup_position = 'peek'
+
+vim.g.OmniSharp_popup_options = {
+  winblend = 30,
+  winhl = 'Normal:Normal,FloatBorder:ModeMsg',
+  border = 'rounded'
+}
+vim.g.OmniSharp_popup_mappings = {
+  sigNext = '<C-n>',
+  sigPrev = '<C-p>',
+  pageDown = { '<C-f>', '<PageDown>' },
+  pageUp = { '<C-b>', '<PageUp>' }
+}
+
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -344,7 +361,7 @@ end, { desc = '[/] Fuzzily search in current buffer]' })
 
 
 vim.keymap.set('n', '<leader>.', function()
-  opts = {}
+  jpts = {}
   opts.cwd = vim.fn.expand('%:p:h')
   require 'telescope.builtin'.find_files(opts)
 end, { desc = '[S]earch [F]iles' })
@@ -502,7 +519,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'rnix', 'bashls', 'jdtls', 'graphql' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'rnix', 'bashls', 'jdtls', 'graphql', 'omnisharp' }
 
 
 
@@ -515,97 +532,131 @@ require('mason-lspconfig').setup {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local pid = vim.fn.getpid()
-
-local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/OmniSharp"
-
-
-require('lspconfig').omnisharp.setup {
-  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-  on_attach = function(_, bufnr)
-    on_attach(_, bufnr)
-    _.server_capabilities.semanticTokensProvider = {
-      full = vim.empty_dict(),
-      legend = {
-        tokenModifiers = { "static_symbol" },
-        tokenTypes = {
-          "comment",
-          "excluded_code",
-          "identifier",
-          "keyword",
-          "keyword_control",
-          "number",
-          "operator",
-          "operator_overloaded",
-          "preprocessor_keyword",
-          "string",
-          "whitespace",
-          "text",
-          "static_symbol",
-          "preprocessor_text",
-          "punctuation",
-          "string_verbatim",
-          "string_escape_character",
-          "class_name",
-          "delegate_name",
-          "enum_name",
-          "interface_name",
-          "module_name",
-          "struct_name",
-          "type_parameter_name",
-          "field_name",
-          "enum_member_name",
-          "constant_name",
-          "local_name",
-          "parameter_name",
-          "method_name",
-          "extension_method_name",
-          "property_name",
-          "event_name",
-          "namespace_name",
-          "label_name",
-          "xml_doc_comment_attribute_name",
-          "xml_doc_comment_attribute_quotes",
-          "xml_doc_comment_attribute_value",
-          "xml_doc_comment_cdata_section",
-          "xml_doc_comment_comment",
-          "xml_doc_comment_delimiter",
-          "xml_doc_comment_entity_reference",
-          "xml_doc_comment_name",
-          "xml_doc_comment_processing_instruction",
-          "xml_doc_comment_text",
-          "xml_literal_attribute_name",
-          "xml_literal_attribute_quotes",
-          "xml_literal_attribute_value",
-          "xml_literal_cdata_section",
-          "xml_literal_comment",
-          "xml_literal_delimiter",
-          "xml_literal_embedded_expression",
-          "xml_literal_entity_reference",
-          "xml_literal_name",
-          "xml_literal_processing_instruction",
-          "xml_literal_text",
-          "regex_comment",
-          "regex_character_class",
-          "regex_anchor",
-          "regex_quantifier",
-          "regex_grouping",
-          "regex_alternation",
-          "regex_text",
-          "regex_self_escaped_character",
-          "regex_other_escape",
-        },
-      },
-      range = true,
-    }
-  end,
-  omnisharp = {
-    useModernNet = true,
-    monoPath = "/usr/bin/mono"
-  },
-  capabilities = capabilities
-}
-
+-- local pid = vim.fn.getpid()
+--
+-- local omnisharp_bin = "/home/jet/.cache/omnisharp-vim/omnisharp-roslyn/OmniSharp"
+--
+--
+-- require('lspconfig').omnisharp.setup {
+--   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+--   on_attach = function(_, bufnr)
+--     on_attach(_, bufnr)
+--     _.server_capabilities.semanticTokensProvider = {
+--       full = vim.empty_dict(),
+--       legend = {
+--         tokenModifiers = { "static_symbol" },
+--         tokenTypes = {
+--           "comment",
+--           "excluded_code",
+--           "identifier",
+--           "keyword",
+--           "keyword_control",
+--           "number",
+--           "operator",
+--           "operator_overloaded",
+--           "preprocessor_keyword",
+--           "string",
+--           "whitespace",
+--           "text",
+--           "static_symbol",
+--           "preprocessor_text",
+--           "punctuation",
+--           "string_verbatim",
+--           "string_escape_character",
+--           "class_name",
+--           "delegate_name",
+--           "enum_name",
+--           "interface_name",
+--           "module_name",
+--           "struct_name",
+--           "type_parameter_name",
+--           "field_name",
+--           "enum_member_name",
+--           "constant_name",
+--           "local_name",
+--           "parameter_name",
+--           "method_name",
+--           "extension_method_name",
+--           "property_name",
+--           "event_name",
+--           "namespace_name",
+--           "label_name",
+--           "xml_doc_comment_attribute_name",
+--           "xml_doc_comment_attribute_quotes",
+--           "xml_doc_comment_attribute_value",
+--           "xml_doc_comment_cdata_section",
+--           "xml_doc_comment_comment",
+--           "xml_doc_comment_delimiter",
+--           "xml_doc_comment_entity_reference",
+--           "xml_doc_comment_name",
+--           "xml_doc_comment_processing_instruction",
+--           "xml_doc_comment_text",
+--           "xml_literal_attribute_name",
+--           "xml_literal_attribute_quotes",
+--           "xml_literal_attribute_value",
+--           "xml_literal_cdata_section",
+--           "xml_literal_comment",
+--           "xml_literal_delimiter",
+--           "xml_literal_embedded_expression",
+--           "xml_literal_entity_reference",
+--           "xml_literal_name",
+--           "xml_literal_processing_instruction",
+--           "xml_literal_text",
+--           "regex_comment",
+--           "regex_character_class",
+--           "regex_anchor",
+--           "regex_quantifier",
+--           "regex_grouping",
+--           "regex_alternation",
+--           "regex_text",
+--           "regex_self_escaped_character",
+--           "regex_other_escape",
+--         },
+--       },
+--       range = true,
+--     }
+--   end,
+--   omnisharp = {
+--     useModernNet = true,
+--     monoPath = "/usr/bin/mono"
+--   },
+--   capabilities = capabilities,
+--   settings = {
+--     FormattingOptions = {
+--       EnableEditorConfigSupport = true
+--     },
+--     ImplementTypeOptions = {
+--       InsertionBehavior = 'WithOtherMembersOfTheSameKind',
+--       PropertyGenerationBehavior = 'PreferAutoProperties'
+--     },
+--     RenameOptions = {
+--       RenameInComments = true,
+--       RenameInStrings  = true,
+--       RenameOverloads  = true
+--     },
+--     RoslynExtensionsOptions = {
+--       EnableAnalyzersSupport = true,
+--       EnableDecompilationSupport = true,
+--       EnableImportCompletion = true,
+--       locationPaths = {},
+--       inlayHintsOptions = {
+--         enableForParameters = true,
+--         forLiteralParameters = true,
+--         forIndexerParameters = true,
+--         forObjectCreationParameters = true,
+--         forOtherParameters = true,
+--         suppressForParametersThatDifferOnlyBySuffix = false,
+--         suppressForParametersThatMatchMethodIntent = false,
+--         suppressForParametersThatMatchArgumentName = false,
+--         enableForTypes = true,
+--         forImplicitVariableTypes = true,
+--         forLambdaParameterTypes = true,
+--         forImplicitObjectCreation = true
+--       }
+--     }
+--   }
+-- }
+--
 
 for _, lsp in ipairs(servers) do
   require('lspconfig')[lsp].setup {
@@ -685,13 +736,45 @@ cmp.setup {
       end
     end, { 'i', 's' }),
   },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
+  formatting = {
+    fields = { 'menu', 'abbr', 'kind' },
+    expandable_indicator = true,
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        vsnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
+
+      item.menu = menu_icon[entry.source.name]
+      local e = entry:get_completion_item()
+      if e.detail ~= nil then
+        item.kind = item.kind .. '   ' .. e.detail
+      end
+
+      return item
+    end,
+  },
+  experimental = {
+    ghost_text = true,
   },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 et
 -- vim: ts=2 sts=2 sw=2 et
 -- vim: ts=2 sts=2 sw=2 et
 -- vim: ts=2 sts=2 sw=2 et
