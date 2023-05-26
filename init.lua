@@ -12,7 +12,7 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use {   -- LSP Configuration & Plugins
+  use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
@@ -44,7 +44,7 @@ require('packer').startup(function(use)
     branch = "v2.x",
     requires = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",       -- not strictly required, but recommended
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     }
   }
@@ -54,20 +54,20 @@ require('packer').startup(function(use)
     require("toggleterm").setup()
   end }
 
-  use {   -- Autocompletion
+  use { -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path' },
   }
 
-  use {   -- Highlight, edit, and navigate code
+  use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
 
-  use {   -- Additional text objects via treesitter
+  use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
@@ -81,11 +81,11 @@ require('packer').startup(function(use)
   use 'OmniSharp/omnisharp-vim'
   use 'nickspoons/vim-sharpenup'
 
-  use 'navarasu/onedark.nvim'                 -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim'             -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim'   -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim'                 -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth'                      -- Detect tabstop and shiftwidth automatically
+  use 'navarasu/onedark.nvim'               -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'           -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
+  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
@@ -96,6 +96,46 @@ require('packer').startup(function(use)
   end }
 
   use 'f-person/git-blame.nvim'
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = false,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-]>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-[>",
+          },
+        },
+        filetypes = {
+          yaml = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+      })
+    end,
+  }
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  }
 
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -416,7 +456,7 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
-      lookahead = true,       -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
         ['aa'] = '@parameter.outer',
@@ -429,7 +469,7 @@ require('nvim-treesitter.configs').setup {
     },
     move = {
       enable = true,
-      set_jumps = true,       -- whether to set jumps in the jumplist
+      set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
         [']m'] = '@function.outer',
         [']]'] = '@class.outer',
@@ -703,6 +743,14 @@ require('lspconfig').lua_ls.setup {
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
+cmp.event:on("menu_opened", function()
+  vim.b.copilot_suggestion_hidden = true
+end)
+
+cmp.event:on("menu_closed", function()
+  vim.b.copilot_suggestion_hidden = false
+end)
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -737,7 +785,7 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
   sources = {
@@ -746,6 +794,7 @@ cmp.setup {
     { name = 'nvim_lsp_signature_help' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'copilot' },
   },
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
@@ -753,6 +802,7 @@ cmp.setup {
     format = function(entry, item)
       local menu_icon = {
         nvim_lsp = 'λ',
+        copilot = '^',
         vsnip = '⋗',
         buffer = 'Ω',
         path = '🖫',
@@ -766,9 +816,6 @@ cmp.setup {
 
       return item
     end,
-  },
-  experimental = {
-    ghost_text = true,
   },
 }
 
