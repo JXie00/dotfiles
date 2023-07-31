@@ -101,6 +101,12 @@ vnoremap <leader>ei :action ExtractInterface<CR>
 vnoremap <leader>ef :action EncapsulateFields<CR>
 nnoremap <leader>cr :action CopyReference<CR>
 
+vnoremap <leader>em :action ExtractMethod<CR>
+nnoremap [m :action MethodUp<CR>
+nnoremap ]m :action MethodDown<CR>
+
+nnoremap <leader>nc :action NewClass<CR>
+nnoremap <leader>nf :action NewFile<CR>
 
 " git 
 nnoremap <leader>gb :action Annotate<CR>
@@ -126,6 +132,8 @@ noremap <leader><leader> :action SearchEverywhere<CR>
 nnoremap <leader>iv :action IntroduceVariable<CR>
 
 noremap <leader>a :action ShowIntentionActions<CR>
+
+noremap <leader>, :action CommanderPopupMenu<CR>
 
 " Refactoring
 :map <leader>rf :action Refactorings.QuickListPopupAction<CR>
