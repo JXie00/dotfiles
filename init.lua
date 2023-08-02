@@ -12,7 +12,7 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use { -- LSP Configuration & Plugins
+  use {   -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
@@ -39,35 +39,58 @@ require('packer').startup(function(use)
 
   vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-  use {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
+
+  use { "nvim-tree/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons", config = function()
+    require("nvim-tree").setup {
+      disable_netrw = true,
+      hijack_netrw = true,
+      open_on_setup = true,
+      ignore_ft_on_setup = {},
+      auto_close = true,
+      open_on_tab = false,
+      hijack_cursor = false,
+      update_cwd = false,
+      lsp_diagnostics = true,
+      update_focused_file = {
+        enable = true,
+        update_cwd = false,
+        ignore_list = {}
+      },
+      system_open = {
+        cmd = nil,
+        args = {}
+      },
+      view = {
+        width = 30,
+        side = 'left',
+        auto_resize = false,
+        mappings = {
+          custom_only = false,
+          list = {}
+        }
+      }
     }
-  }
+  end }
 
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end }
 
-  use { -- Autocompletion
+  use {   -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path' },
   }
 
-  use { -- Highlight, edit, and navigate code
+  use {   -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
 
-  use { -- Additional text objects via treesitter
+  use {   -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
@@ -81,11 +104,11 @@ require('packer').startup(function(use)
   use 'OmniSharp/omnisharp-vim'
   use 'nickspoons/vim-sharpenup'
 
-  use 'navarasu/onedark.nvim'               -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim'           -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
+  use 'navarasu/onedark.nvim'                 -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'             -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim'   -- Add indentation guides even on blank lines
+  use 'numToStr/Comment.nvim'                 -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                      -- Detect tabstop and shiftwidth automatically
   use 'folke/tokyonight.nvim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
@@ -96,6 +119,7 @@ require('packer').startup(function(use)
   end }
 
   use 'f-person/git-blame.nvim'
+
   use {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -103,7 +127,7 @@ require('packer').startup(function(use)
     config = function()
       require("copilot").setup({
         suggestion = {
-          enabled = false,
+          enabled = true,
           auto_trigger = true,
           debounce = 75,
           keymap = {
@@ -129,14 +153,6 @@ require('packer').startup(function(use)
       })
     end,
   }
-  use {
-    "zbirenbaum/copilot-cmp",
-    after = { "copilot.lua" },
-    config = function()
-      require("copilot_cmp").setup()
-    end
-  }
-
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -422,6 +438,8 @@ vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>fr', require('telescope.builtin').registers, { desc = '[S]earch [R]egesters' })
+vim.keymap.set('n', '<leader>fm', require('telescope.builtin').marks, { desc = '[S]earch [M]arks' })
 
 
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, { desc = '[S]earch Command history' })
@@ -456,7 +474,7 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,       -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
         ['aa'] = '@parameter.outer',
@@ -469,7 +487,7 @@ require('nvim-treesitter.configs').setup {
     },
     move = {
       enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
+      set_jumps = true,       -- whether to set jumps in the jumplist
       goto_next_start = {
         [']m'] = '@function.outer',
         [']]'] = '@class.outer',
@@ -528,6 +546,7 @@ local on_attach = function(_, bufnr)
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('su', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('fo', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -794,7 +813,6 @@ cmp.setup {
     { name = 'nvim_lsp_signature_help' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'copilot' },
   },
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
@@ -802,7 +820,6 @@ cmp.setup {
     format = function(entry, item)
       local menu_icon = {
         nvim_lsp = 'λ',
-        copilot = '^',
         vsnip = '⋗',
         buffer = 'Ω',
         path = '🖫',
