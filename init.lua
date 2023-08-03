@@ -20,7 +20,7 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
     },
   }
 
@@ -279,6 +279,7 @@ vim.keymap.set('n', '<leader>j', ':bprevious<cr>')
 vim.keymap.set('n', '<C-s>', ':Format<cr>|:w<cr>')
 vim.keymap.set('n', '<leader>wc', ':<C-W>q<cr>')
 vim.keymap.set('n', '<leader>wC', ':only<cr>')
+vim.keymap.set('n', '<leader>fe', ':NvimTreeToggle<cr>')
 
 
 vim.keymap.set('i', '<C-s>', '<ESC>:w<cr>')
@@ -458,7 +459,7 @@ vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'nix', 'bash', 'java',
-    'graphql' },
+    'graphql', 'javascript', 'tsx', 'css', 'json' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -578,7 +579,8 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'rnix', 'bashls', 'jdtls', 'graphql', 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'rnix', 'bashls', 'jdtls', 'graphql', 'omnisharp', 'tsserver',
+  'eslint', 'html', 'cssls' }
 
 
 
@@ -814,26 +816,26 @@ cmp.setup {
     { name = 'buffer' },
     { name = 'path' },
   },
-  formatting = {
-    fields = { 'menu', 'abbr', 'kind' },
-    expandable_indicator = true,
-    format = function(entry, item)
-      local menu_icon = {
-        nvim_lsp = 'λ',
-        vsnip = '⋗',
-        buffer = 'Ω',
-        path = '🖫',
-      }
-
-      item.menu = menu_icon[entry.source.name]
-      local e = entry:get_completion_item()
-      if e.detail ~= nil then
-        item.kind = item.kind .. '   ' .. e.detail
-      end
-
-      return item
-    end,
-  },
+  -- formatting = {
+  --   fields = { 'menu', 'abbr', 'kind' },
+  --   expandable_indicator = true,
+  --   format = function(entry, item)
+  --     local menu_icon = {
+  --       nvim_lsp = 'λ',
+  --       vsnip = '⋗',
+  --       buffer = 'Ω',
+  --       path = '🖫',
+  --     }
+  --
+  --     item.menu = menu_icon[entry.source.name]
+  --     local e = entry:get_completion_item()
+  --     if e.detail ~= nil then
+  --       item.kind = item.kind .. '   ' .. e.detail
+  --     end
+  --
+  --     return item
+  --   end,
+  -- },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
