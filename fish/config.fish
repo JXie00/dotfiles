@@ -29,7 +29,7 @@ function fcd --description "Fuzzy change directory"
 
     # https://github.com/fish-shell/fish-shell/issues/1362
     set -l tmpfile (mktemp)
-    fdfind . $searchdir -t d | fzf > $tmpfile
+    fdfind . $searchdir -H -t d | fzf > $tmpfile
     set -l destdir (cat $tmpfile)
     rm -f $tmpfile
 
@@ -39,6 +39,7 @@ function fcd --description "Fuzzy change directory"
 
     cd $destdir
 end
+
 
 
 starship init fish | source
