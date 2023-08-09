@@ -7,5 +7,11 @@ set -q XDG_DATA_HOME
 source $OMF_PATH/init.fish
 
 alias c='clear'
+alias ls='lsd'
+alias bat='batcat'
+alias fv='fzf --print0 | xargs -0 -o nvim'
+
 fish_vi_key_bindings
+
+set -gx FZF_DEFAULT_COMMAND "fdfind . $HOME"
 
