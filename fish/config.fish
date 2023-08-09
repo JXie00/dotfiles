@@ -29,6 +29,27 @@ function fcd --description "Fuzzy change directory"
 
     # https://github.com/fish-shell/fish-shell/issues/1362
     set -l tmpfile (mktemp)
+    fdfind . $searchdir -t d | fzf > $tmpfile
+    set -l destdir (cat $tmpfile)
+    rm -f $tmpfile
+
+    if test -z "$destdir"
+        return 1
+    end
+
+    cd $destdir
+end
+
+
+function fcD --description "Fuzzy change directory with hidden files"
+    if set -q argv[1]
+        set searchdir $argv[1]
+    else
+        set searchdir $HOME
+    end
+
+    # https://github.com/fish-shell/fish-shell/issues/1362
+    set -l tmpfile (mktemp)
     fdfind . $searchdir -H -t d | fzf > $tmpfile
     set -l destdir (cat $tmpfile)
     rm -f $tmpfile
@@ -41,7 +62,19 @@ function fcd --description "Fuzzy change directory"
 end
 
 
+
 function fv --description "Fuzzy find files"
+    if set -q argv[1]
+        set searchdir $argv[1]
+    else
+        set searchdir $HOME
+    end
+
+    fdfind . -t f $searchdir | fzf --print0 | xargs -0 -o nvim
+end
+
+
+function fV --description "Fuzzy find files with hidden files"
     if set -q argv[1]
         set searchdir $argv[1]
     else
