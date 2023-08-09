@@ -41,6 +41,17 @@ function fcd --description "Fuzzy change directory"
 end
 
 
+function fv --description "Fuzzy find files"
+    if set -q argv[1]
+        set searchdir $argv[1]
+    else
+        set searchdir $HOME
+    end
+
+    fdfind . -H -t f $searchdir | fzf --print0 | xargs -0 -o nvim
+end
+
+
 
 starship init fish | source
 direnv hook fish | source

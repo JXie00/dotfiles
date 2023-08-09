@@ -9,12 +9,12 @@ source $OMF_PATH/init.fish
 alias c='clear'
 alias ls='lsd'
 alias bat='batcat'
-alias fv='fzf --print0 | xargs -0 -o nvim'
+# alias fv='fzf --print0 | xargs -0 -o nvim'
 alias sd "cd ~ && cd (find * -type d | fzf)"
 
 fish_vi_key_bindings
 
-set -gx FZF_DEFAULT_COMMAND "fdfind . -H -t f $HOME"
+# set -gx FZF_DEFAULT_COMMAND "fdfind . -H -t f $HOME"
 
 set -gx FZF_DEFAULT_OPTS "
 --preview 'batcat --style numbers,changes --theme Dracula --color=always  {}'
