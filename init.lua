@@ -37,40 +37,36 @@ require('packer').startup(function(use)
     end
   }
 
-  vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-
-  use { "nvim-tree/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons", config = function()
-    require("nvim-tree").setup {
-      disable_netrw = true,
-      hijack_netrw = true,
-      open_on_setup = true,
-      ignore_ft_on_setup = {},
-      open_on_tab = false,
-      hijack_cursor = false,
-      update_cwd = false,
-      lsp_diagnostics = true,
-      update_focused_file = {
-        enable = true,
-        update_cwd = false,
-        ignore_list = {}
-      },
-      system_open = {
-        cmd = nil,
-        args = {}
-      },
-      view = {
-        width = 30,
-        side = 'left',
-        auto_resize = false,
-        mappings = {
-          custom_only = false,
-          list = {}
-        }
-      }
-    }
-  end }
-
+  -- use { "nvim-tree/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons", config = function()
+  --     require("nvim-tree").setup {
+  --         disable_netrw = true,
+  --         hijack_netrw = true,
+  --         open_on_tab = false,
+  --         hijack_cursor = false,
+  --         update_cwd = false,
+  --         lsp_diagnostics = true,
+  --         update_focused_file = {
+  --             enable = true,
+  --             update_cwd = false,
+  --             ignore_list = {}
+  --         },
+  --         system_open = {
+  --             cmd = nil,
+  --             args = {}
+  --         },
+  --         view = {
+  --             width = 30,
+  --             side = 'left',
+  --             auto_resize = false,
+  --             mappings = {
+  --                 custom_only = false,
+  --                 list = {}
+  --             }
+  --         }
+  --     }
+  -- end }
+  --
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
@@ -111,12 +107,6 @@ require('packer').startup(function(use)
   use 'folke/tokyonight.nvim'
   use 'tpope/vim-surround'
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use { "ellisonleao/glow.nvim", config = function()
-    require("glow").setup({
-      style = "dark",
-    })
-  end }
-
   use 'f-person/git-blame.nvim'
   use 'ThePrimeagen/harpoon'
 
