@@ -119,6 +119,7 @@ require('packer').startup(function(use)
   end }
 
   use 'f-person/git-blame.nvim'
+  use 'ThePrimeagen/harpoon'
 
   use {
     "zbirenbaum/copilot.lua",
@@ -453,13 +454,35 @@ vim.keymap.set('n', '<leader>gb', require('telescope.builtin').git_branches,
 vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status,
   { desc = 'Lists current changes per file with diff preview and add action' })
 
+local function toggle_move()
+  if vim.v.count > 0 then
+    -- this does not work (yet?)
+    -- require('harpoon.ui').nav_file(vim.v.count)
+    return '<cmd>lua require("harpoon.ui").nav_file(vim.v.count)<CR>'
+  else
+    require('harpoon.mark').toggle_file()
+  end
+end
+
+vim.keymap.set('n', 'gm', toggle_move, { expr = true },
+  { desc = 'Add a mark to harpoon' })
+
+vim.keymap.set('n', '<leader>gm', require('harpoon.ui').toggle_quick_menu,
+  { desc = 'open quick harpoon menu' })
+
+vim.keymap.set('n', ']h', require('harpoon.ui').nav_next,
+  { desc = 'Nav to next harpoon mark' })
+
+vim.keymap.set('n', '[h', require('harpoon.ui').nav_prev,
+  { desc = 'Nav to previous harpoon mark' })
+
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'c_sharp', 'nix', 'bash', 'java',
-    'graphql', 'javascript', 'tsx', 'css', 'json' },
+    'graphql', 'javascript', 'tsx', 'css', 'json', 'vim' },
 
   highlight = { enable = true },
   indent = { enable = true },
