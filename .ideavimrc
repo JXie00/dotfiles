@@ -12,7 +12,7 @@ set incsearch
 
 " Don't use Ex mode, use Q for formatting.
 map Q gq
-
+map s <Action>(flash.search)
 " remap escape key
 inoremap jk <ESC>
 
@@ -125,7 +125,7 @@ nnoremap <leader>ti :action ExpressionTypeInfo<CR>
 nnoremap <leader>pi :action ParameterInfo<CR>
 nnoremap fo :action FileStructurePopup<CR>
 nnoremap fu :action FindUsages<CR>
-nnoremap su :action ShowUsages<CR>
+nnoremap <leader>su :action ShowUsages<CR>
 
 noremap <leader><leader> :action SearchEverywhere<CR>
 
