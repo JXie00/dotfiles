@@ -11,7 +11,7 @@ return {
 
     dap.adapters.coreclr = {
       type = "executable",
-      command = "/snap/bin/netcoredbg",
+      command = "/home/jet/.nix-profile/bin/netcoredbg",
       args = { "--interpreter=vscode" },
     }
 
